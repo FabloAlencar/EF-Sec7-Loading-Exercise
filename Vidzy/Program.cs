@@ -1,4 +1,8 @@
-﻿namespace Vidzy
+﻿using System;
+using System.Data.Entity;
+using System.Linq;
+
+namespace Vidzy
 {
     internal class Program
     {
@@ -6,10 +10,12 @@
         {
             var dbContext = new VidzyContext();
 
-            var videos = dbContext.Videos;
+            var videos = dbContext.Videos.Include(v => v.Genre).ToList();
 
             foreach (var video in videos)
-                System.Console.WriteLine("Video: {0}, Genre: {1} ", video.Name, video.Genre.Name);
+                Console.WriteLine("Video: {0}, Genre: {1} ", video.Name, video.Genre.Name);
+
+            Console.ReadLine();
         }
     }
 }
